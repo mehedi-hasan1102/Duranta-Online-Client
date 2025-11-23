@@ -27,7 +27,7 @@ function Banner() {
       <div className="absolute inset-0 animate-gradient-xy"></div>
 
       {/* Animated Overlay Glow */}
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/70"></div> */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/70"></div>
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center px-4 sm:px-6">
