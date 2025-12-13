@@ -1,15 +1,21 @@
-"use client";
+'use client';
 import Link from "next/link";
 import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
+interface SocialIconProps {
+  href: string;
+  icon: React.ReactNode;
+  color: string;
+}
+
 // Reusable SocialIcon component
-const SocialIcon = ({ href, icon, color }) => (
+const SocialIcon: React.FC<SocialIconProps> = ({ href, icon, color }) => (
   <Link
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className={`p-3 rounded-full transition-all duration-300 hover:scale-110`}
+    className="p-3 rounded-full transition-all duration-300 hover:scale-110"
     style={{
       background: "rgba(255, 255, 255, 0.1)",
       color: "white",
@@ -20,7 +26,7 @@ const SocialIcon = ({ href, icon, color }) => (
   </Link>
 );
 
-function Banner() {
+const Banner: React.FC = () => {
   return (
     <div className="relative w-full h-[90vh] sm:h-screen overflow-hidden flex items-center justify-center text-center">
       {/* Animated Gradient Background */}
@@ -109,6 +115,6 @@ function Banner() {
       `}</style>
     </div>
   );
-}
+};
 
 export default Banner;

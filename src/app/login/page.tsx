@@ -1,32 +1,43 @@
+'use client';
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
-"use client";
-import { useState } from "react";
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
-export default function LoginPage() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [msg, setMsg] = useState("");
+const LoginPage: React.FC = () => {
+  const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
+  const [msg, setMsg] = useState<string>("");
 
-  const handleChange = (e) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", // for cookies
-      body: JSON.stringify(form),
-    });
-    const data = await res.json();
-    setMsg(data.message);
-    if (res.ok) {
-      localStorage.setItem("userEmail", data.email);
-      window.dispatchEvent(new Event("userLogin"));
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // for cookies
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      setMsg(data.message);
+
+      if (res.ok) {
+        localStorage.setItem("userEmail", data.email);
+        window.dispatchEvent(new Event("userLogin"));
+      }
+    } catch (error) {
+      setMsg("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-white text-center mb-6">
           Welcome Back
@@ -40,6 +51,7 @@ export default function LoginPage() {
             name="email"
             type="email"
             placeholder="Email"
+            value={form.email}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -48,6 +60,7 @@ export default function LoginPage() {
             name="password"
             type="password"
             placeholder="Password"
+            value={form.password}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -78,4 +91,6 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

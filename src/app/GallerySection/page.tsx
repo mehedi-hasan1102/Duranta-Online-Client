@@ -1,9 +1,9 @@
-"use client";
+'use client';
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
 
-export default function GallerySection() {
-  const allImages = [
+const GallerySection: React.FC = () => {
+  const allImages: string[] = [
     "/images/gallery1.jpg",
     "/images/gallery2.jpg",
     "/images/gallery3.jpg",
@@ -15,17 +15,16 @@ export default function GallerySection() {
     "/images/gallery9.jpg",
   ];
 
-  const [visible, setVisible] = useState(9);
+  const [visible, setVisible] = useState<number>(9);
 
   const handleLoadMore = () => {
     setVisible((prev) => prev + 3);
   };
 
   return (
-    <section className=" py-16 px-6">
+    <section className="py-16 px-6">
       {/* Section Title */}
       <div className="text-center mb-12">
-        
         <h2 className="text-4xl md:text-5xl font-bold mb-6 relative inline-block text-white">
           Our Awesome Gallery
         </h2>
@@ -62,4 +61,6 @@ export default function GallerySection() {
       )}
     </section>
   );
-}
+};
+
+export default GallerySection;

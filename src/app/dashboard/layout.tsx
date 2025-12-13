@@ -1,10 +1,14 @@
-  "use client";
+'use client';
 import Sidebar from "./components/sidebar";
 // import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 
-export default function DashboardLayout({ children }) {
-  const [user, setUser] = useState(null);
+interface DashboardLayoutProps {
+  children: ReactNode;
+}
+
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+  const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch logged-in user
@@ -16,10 +20,13 @@ export default function DashboardLayout({ children }) {
       .catch(() => setUser(null));
   }, []);
 
-  if (!user) return <p className="text-center mt-20 text-white">Loading...</p>;
+  if (!user)
+    return (
+      <p className="text-center mt-20 text-white">Loading...</p>
+    );
 
   return (
-    <div className="flex min-h-screen  text-white">
+    <div className="flex min-h-screen text-white">
       <Sidebar user={user} />
       <div className="flex-1 flex flex-col">
         {/* <Navbar user={user} /> */}
@@ -27,4 +34,6 @@ export default function DashboardLayout({ children }) {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardLayout;

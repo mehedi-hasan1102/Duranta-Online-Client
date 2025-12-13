@@ -1,13 +1,13 @@
-"use client";
+'use client';
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-const WhatsAppButton = () => {
-  const whatsappNumber = "+1234567890";
-  const message = "Hello! I would like to chat.";
+const WhatsAppButton: React.FC = () => {
+  const whatsappNumber: string = "+1234567890";
+  const message: string = "Hello! I would like to chat.";
 
-  const openWhatsApp = () => {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const openWhatsApp = (): void => {
+    const url: string = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 

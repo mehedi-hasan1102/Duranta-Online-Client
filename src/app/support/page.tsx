@@ -1,7 +1,16 @@
-"use client";
-import { useState } from "react";
+'use client';
+import React, { useState } from "react";
 
-const staticTickets = [
+interface Ticket {
+  id: number;
+  name: string;
+  email: string;
+  type: string;
+  message: string;
+  status: "Open" | "Resolved" | "Closed";
+}
+
+const staticTickets: Ticket[] = [
   {
     id: 1,
     name: "John Doe",
@@ -36,11 +45,11 @@ const staticTickets = [
   },
 ];
 
-export default function SupportPage() {
-  const [tickets] = useState(staticTickets);
+const SupportPage: React.FC = () => {
+  const [tickets] = useState<Ticket[]>(staticTickets);
 
   return (
-    <section className="py-20  min-h-screen text-white">
+    <section className="py-20 min-h-screen text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Page Title */}
         <h1 className="text-4xl md:text-5xl font-bold mb-6 relative inline-block">
@@ -87,4 +96,6 @@ export default function SupportPage() {
       </div>
     </section>
   );
-}
+};
+
+export default SupportPage;

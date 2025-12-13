@@ -1,27 +1,15 @@
-
-"use client";
+'use client';
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-function Navbar() {
-  const [email, setEmail] = useState("");
+const Navbar: React.FC = () => {
+  const [email, setEmail] = useState<string | null>(null);
   const [showLogout, setShowLogout] = useState(false);
 
-  const loadEmail = () => {
-    const userEmail = localStorage.getItem("userEmail");
-    setEmail(userEmail || "");
-  };
-
   useEffect(() => {
-    loadEmail();
-    window.addEventListener("userLogin", loadEmail);
-    window.addEventListener("userLogout", loadEmail);
-
-    return () => {
-      window.removeEventListener("userLogin", loadEmail);
-      window.removeEventListener("userLogout", loadEmail);
-    };
+    const userEmail = localStorage.getItem("userEmail");
+    setEmail(userEmail);
   }, []);
 
   const handleLogout = async () => {
@@ -31,7 +19,7 @@ function Navbar() {
     });
 
     localStorage.removeItem("userEmail");
-    window.dispatchEvent(new Event("userLogout"));
+    setEmail(null);
     setShowLogout(false);
   };
 
@@ -65,16 +53,6 @@ function Navbar() {
               SUPPORT
             </Link>
           </li>
-          {/* <li>
-            <Link href="/services" className="text-gray-300 hover:text-white transition">
-              OUR SERVICE
-            </Link>
-          </li> */}
-          {/* <li>
-            <Link href="/bill-payment" className="text-gray-300 hover:text-white transition">
-              BILL PAYMENT
-            </Link>
-          </li> */}
           <li>
             <Link href="/packages" className="text-gray-300 hover:text-white transition">
               PACKAGES
@@ -90,10 +68,7 @@ function Navbar() {
           {email ? (
             <>
               <li>
-                <Link
-                  href="/dashboard"
-                  className="text-cyan-400 hover:text-white transition"
-                >
+                <Link href="/dashboard" className="text-cyan-400 hover:text-white transition">
                   DASHBOARD
                 </Link>
               </li>
@@ -131,6 +106,6 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

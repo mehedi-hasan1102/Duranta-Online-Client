@@ -1,9 +1,15 @@
-
-
-"use client";
+'use client';
 import React, { useState } from "react";
 
-const plans = [
+interface Plan {
+  title: string;
+  speed: string;
+  price: string;
+  desc: string;
+  features: string[];
+}
+
+const plans: Plan[] = [
   {
     title: "Basic Package",
     speed: "30 Mbps",
@@ -58,11 +64,11 @@ const plans = [
   },
 ];
 
-export default function Packages() {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+const Packages: React.FC = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
-  const openModal = (plan) => {
+  const openModal = (plan: Plan) => {
     setSelectedPlan(plan);
     setShowModal(true);
   };
@@ -91,9 +97,7 @@ export default function Packages() {
             >
               <h3 className="text-lg sm:text-xl font-bold mb-1">{plan.title}</h3>
               <p className="text-sm text-gray-300 mb-3">{plan.speed}</p>
-              <div className="text-3xl sm:text-4xl font-extrabold mb-2">
-                {plan.price}
-              </div>
+              <div className="text-3xl sm:text-4xl font-extrabold mb-2">{plan.price}</div>
               <p className="text-xs sm:text-sm text-gray-400 mb-5">{plan.desc}</p>
 
               <ul className="mt-5 mb-5 sm:mt-6 space-y-2 text-xs sm:text-sm text-gray-200">
@@ -136,9 +140,7 @@ export default function Packages() {
 
             {/* Left - Plan Info */}
             <div className="flex-1 p-6 sm:p-8 border-r border-blue-400/30">
-              <h2 className="text-2xl font-bold mb-2 text-cyan-300">
-                {selectedPlan.title}
-              </h2>
+              <h2 className="text-2xl font-bold mb-2 text-cyan-300">{selectedPlan.title}</h2>
               <p className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500 mb-4">
                 {selectedPlan.speed}
               </p>
@@ -151,9 +153,7 @@ export default function Packages() {
 
             {/* Right - Form */}
             <div className="flex-1 p-6 sm:p-8">
-              <h3 className="text-lg font-semibold mb-4 text-cyan-300">
-                Request a Callback
-              </h3>
+              <h3 className="text-lg font-semibold mb-4 text-cyan-300">Request a Callback</h3>
               <form className="space-y-3">
                 <input
                   type="text"
@@ -172,7 +172,7 @@ export default function Packages() {
                 />
                 <textarea
                   placeholder="Write your message"
-                  rows="3"
+                  rows={3}
                   className="w-full bg-transparent border border-blue-400/40 text-white placeholder-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-cyan-400 outline-none transition resize-none"
                 ></textarea>
 
@@ -214,4 +214,6 @@ export default function Packages() {
       )}
     </section>
   );
-}
+};
+
+export default Packages;

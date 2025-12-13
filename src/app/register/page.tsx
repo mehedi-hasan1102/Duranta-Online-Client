@@ -1,26 +1,44 @@
+'use client';
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
-"use client";
-import { useState } from "react";
+interface FormData {
+  name: string;
+  phone: string;
+  email: string;
+  password: string;
+}
 
-export default function RegisterPage() {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", password: "" });
-  const [msg, setMsg] = useState("");
+const RegisterPage: React.FC = () => {
+  const [form, setForm] = useState<FormData>({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
+  const [msg, setMsg] = useState<string>("");
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const data = await res.json();
-    setMsg(data.message);
+    try {
+      const res = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      setMsg(data.message || "Something went wrong");
+    } catch (error) {
+      setMsg("Failed to register. Please try again.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-white text-center mb-6">Create Account</h1>
         <p className="text-gray-300 text-center mb-6">
@@ -32,6 +50,7 @@ export default function RegisterPage() {
             name="name"
             type="text"
             placeholder="Full Name"
+            value={form.name}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -40,6 +59,7 @@ export default function RegisterPage() {
             name="phone"
             type="text"
             placeholder="Phone Number"
+            value={form.phone}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -48,6 +68,7 @@ export default function RegisterPage() {
             name="email"
             type="email"
             placeholder="Email"
+            value={form.email}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -56,6 +77,7 @@ export default function RegisterPage() {
             name="password"
             type="password"
             placeholder="Password"
+            value={form.password}
             onChange={handleChange}
             className="p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             required
@@ -85,4 +107,6 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;

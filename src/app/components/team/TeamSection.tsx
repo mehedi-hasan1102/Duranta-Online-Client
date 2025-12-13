@@ -1,34 +1,39 @@
-
-"use client";
+'use client';
 import React from "react";
-import Slider from "react-slick";
+import Slider, { Settings } from "react-slick";
 import Image from "next/image";
 
-const teamMembers = [
+interface TeamMember {
+  name: string;
+  role: string;
+  image: string;
+}
+
+const teamMembers: TeamMember[] = [
   {
     name: "Yomi Denzel",
     role: "E-Commerce 2.0",
-    image: "/team/yomi.jpg",
+    image: "/team/team1.png",
   },
   {
     name: "Timothée Moiroux",
     role: "Investissement Immobilier",
-    image: "/team/timothee.jpg",
+    image: "/team/team2.png",
   },
   {
     name: "David Sequiera",
     role: "Closing",
-    image: "/team/david.jpg",
+    image: "/team/team3.png",
   },
   {
     name: "Manuel Ravier",
     role: "Investissement Immobilier",
-    image: "/team/manuel.jpg",
+    image: "/team/team2.png",
   },
 ];
 
-export default function TeamSection() {
-  const settings = {
+const TeamSection: React.FC = () => {
+  const settings: Settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -58,13 +63,12 @@ export default function TeamSection() {
   };
 
   return (
-    <section className=" py-20">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-center">
         <h2 className="text-4xl font-bold mb-8">THE TEAM</h2>
         <p className="text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-  Our expert team at Duranta Online Ltd. delivers reliable IT and internet solutions, committed to quality and customer satisfaction.
-</p>
-
+          Our expert team at Duranta Online Ltd. delivers reliable IT and internet solutions, committed to quality and customer satisfaction.
+        </p>
 
         <Slider {...settings}>
           {teamMembers.map((member, index) => (
@@ -80,7 +84,7 @@ export default function TeamSection() {
                   />
                 </div>
                 <div className="absolute bottom-6 left-6 text-left text-white">
-                  <h3 className="text-xl font-semibold">{member.name}</h3>
+                  <h3 className="text-xl font-semibold text-cyan-400">{member.name}</h3>
                   <p className="text-sm text-cyan-400">{member.role}</p>
                 </div>
               </div>
@@ -90,4 +94,6 @@ export default function TeamSection() {
       </div>
     </section>
   );
-}
+};
+
+export default TeamSection;
