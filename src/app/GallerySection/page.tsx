@@ -4,15 +4,15 @@ import Image from "next/image";
 
 const GallerySection: React.FC = () => {
   const allImages: string[] = [
-    "/images/gallery1.jpg",
-    "/images/gallery2.jpg",
-    "/images/gallery3.jpg",
-    "/images/gallery4.jpg",
-    "/images/gallery5.jpg",
-    "/images/gallery6.jpg",
-    "/images/gallery7.jpg",
-    "/images/gallery8.jpg",
-    "/images/gallery9.jpg",
+    "/gallery/g1.jpeg",
+    "/gallery/g2.jpg",
+    "/gallery/g3.jpg",
+    "/gallery/g4.jpg",
+    "/gallery/g6.png",
+    "/gallery/g7.jpg",
+    "/gallery/g8.jpg",
+    "/gallery/g9.jpeg",
+    "/gallery/g10.jpg",
   ];
 
   const [visible, setVisible] = useState<number>(9);
