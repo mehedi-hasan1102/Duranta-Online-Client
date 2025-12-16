@@ -13,7 +13,6 @@ interface Ticket {
   status: "Open" | "Resolved" | "Closed";
 }
 
-
 const SupportPage: React.FC = () => {
   const [tickets, setTickets] = useState([]);
   const [form, setForm] = useState({
@@ -26,7 +25,9 @@ const SupportPage: React.FC = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/supporttickets");
+        const res = await axios.get(
+          "https://duranta-online-server.vercel.app/supporttickets"
+        );
         setTickets(res?.data);
       } catch (error) {
         Swal.fire({
@@ -66,7 +67,7 @@ const SupportPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/supporttickets",
+        "https://duranta-online-server.vercel.app/supporttickets",
         newTicket
       );
 

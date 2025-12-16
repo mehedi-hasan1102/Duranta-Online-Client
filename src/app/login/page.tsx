@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface LoginForm {
@@ -17,12 +17,15 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // for cookies
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        "https://duranta-online-server.vercel.app/api/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // for cookies
+          body: JSON.stringify(form),
+        }
+      );
 
       const data = await res.json();
       setMsg(data.message);
