@@ -1,7 +1,8 @@
+"use client";
 
-'use client';
-
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 interface Ticket {
   id: number;
@@ -12,35 +13,9 @@ interface Ticket {
   status: "Open" | "Resolved" | "Closed";
 }
 
-const initialTickets: Ticket[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    type: "Technical Issue",
-    message: "My internet keeps disconnecting.",
-    status: "Open",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    type: "Billing",
-    message: "I was charged twice this month.",
-    status: "Resolved",
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    type: "Feedback",
-    message: "Your service is excellent!",
-    status: "Closed",
-  },
-];
 
 const SupportPage: React.FC = () => {
-  const [tickets, setTickets] = useState<Ticket[]>(initialTickets);
+  const [tickets, setTickets] = useState([]);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -48,13 +23,36 @@ const SupportPage: React.FC = () => {
     message: "",
   });
 
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/supporttickets");
+        setTickets(res?.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Failed to Load Tickets",
+          text: "Unable to fetch support tickets at this time. Please try again later.",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    };
+
+    fetchTickets();
+  }, []);
+
+  console.log("tickets", tickets);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newTicket: Ticket = {
@@ -66,6 +64,41 @@ const SupportPage: React.FC = () => {
       status: "Open",
     };
 
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/supporttickets",
+        newTicket
+      );
+
+      console.log("response", response);
+
+      if (response?.data?.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: "We Got Your Message",
+          text: "Our support team has received your request and will contact you soon.",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Unable to Complete Request",
+          text: "We couldn’t process your request. Please try again later.",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Something Went Wrong",
+        text: "Oops! Something unexpected happened. Please try again.",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+    }
+
     setTickets([newTicket, ...tickets]);
     setForm({ name: "", email: "", type: "Technical Issue", message: "" });
   };
@@ -73,14 +106,14 @@ const SupportPage: React.FC = () => {
   return (
     <section className="py-20 min-h-screen text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Page Title */}
         <div className="text-center mb-14">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Support Center
           </h1>
           <p className="text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Submit a support request and our team will respond as quickly as possible.
+            Submit a support request and our team will respond as quickly as
+            possible.
           </p>
         </div>
 
@@ -161,9 +194,7 @@ const SupportPage: React.FC = () => {
               <span className="bg-cyan-700 inline-block px-3 py-1 text-xs rounded mb-3">
                 {ticket.type}
               </span>
-              <p className="text-gray-300 mb-4 break-words">
-                {ticket.message}
-              </p>
+              <p className="text-gray-300 mb-4 break-words">{ticket.message}</p>
               <span
                 className={`inline-block px-3 py-1 rounded text-xs font-semibold ${
                   ticket.status === "Open"
