@@ -90,7 +90,7 @@ const Packages: React.FC = () => {
     const selectedPackage = { name, phone, address, message };
     try {
       const response = await axios.post(
-        "http://localhost:5000/packages",
+        "https://duranta-online-server.vercel.app/packages",
         selectedPackage
       );
 
