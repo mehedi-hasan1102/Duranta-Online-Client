@@ -216,24 +216,28 @@ const Packages: React.FC = () => {
                 <input
                   type="text"
                   name="name"
+                  required
                   placeholder="Your name"
                   className="w-full bg-transparent border border-blue-400/40 text-white placeholder-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-cyan-400 outline-none transition"
                 />
                 <input
                   type="text"
                   name="phone"
+                  required
                   placeholder="Phone number"
                   className="w-full bg-transparent border border-blue-400/40 text-white placeholder-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-cyan-400 outline-none transition"
                 />
                 <input
                   type="text"
                   name="address"
+                  required
                   placeholder="Your address"
                   className="w-full bg-transparent border border-blue-400/40 text-white placeholder-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-cyan-400 outline-none transition"
                 />
                 <textarea
                   name="message"
                   placeholder="Write your message"
+                  required
                   rows={3}
                   className="w-full bg-transparent border border-blue-400/40 text-white placeholder-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-cyan-400 outline-none transition resize-none"
                 ></textarea>
@@ -242,6 +246,7 @@ const Packages: React.FC = () => {
                 <div className="flex items-center gap-2 border border-blue-400/40 rounded-md px-3 py-2 bg-transparent">
                   <input
                     type="checkbox"
+                    required
                     id="robot"
                     className="accent-cyan-400"
                   />
