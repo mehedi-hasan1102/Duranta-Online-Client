@@ -17,6 +17,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",       // <- added
+    "paths": {            // <- added
+      "@/*": ["./*"]
+    },
     "plugins": [
       {
         "name": "next"
@@ -29,8 +33,9 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/contact/page.tsx"  ],
+    "**/*.tsx",
+    "src/app/contact/page.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]

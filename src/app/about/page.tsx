@@ -1,6 +1,8 @@
 'use client';
+import { BorderBeam } from "@/components/ui/border-beam";
 import React from "react";
 import { FaUsers, FaBolt, FaCode } from "react-icons/fa";
+
 
 interface Feature {
   icon: React.ReactNode;
@@ -45,13 +47,18 @@ const AboutUs: React.FC = () => {
         </p>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-gray-800/50 p-6 rounded-xl space-y-5 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+              className=" relative  bg-gray-800/50 p-6 rounded-xl space-y-5 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
             >
-              <div className="flex items-center gap-3 justify-start">
+
+
+              <div className="flex items-center gap-3 justify-star rounded-2xl">
+                <BorderBeam size={100} duration={10}  colorFrom="#3b82f6" colorTo="#0ea5e9"   />
+
                 <div>{feature.icon}</div>
                 <h3 className="text-xl font-semibold">{feature.title}</h3>
               </div>
