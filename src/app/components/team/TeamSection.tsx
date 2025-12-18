@@ -13,22 +13,22 @@ const teamMembers: TeamMember[] = [
   {
     name: "Yomi Denzel",
     role: "E-Commerce 2.0",
-    image: "/team/team1.png",
+    image: "/team/team1.jpg",
   },
   {
     name: "Timothée Moiroux",
     role: "Investissement Immobilier",
-    image: "/team/team2.png",
+    image: "/team/team2.jpg",
   },
   {
     name: "David Sequiera",
     role: "Closing",
-    image: "/team/team3.png",
+    image: "/team/team3.jpg",
   },
   {
     name: "Manuel Ravier",
     role: "Investissement Immobilier",
-    image: "/team/team2.png",
+    image: "/team/team5.jpg",
   },
 ];
 

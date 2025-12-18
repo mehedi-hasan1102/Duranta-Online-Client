@@ -1,7 +1,14 @@
-'use client';
+"use client";
+
+import { useAuth } from "@/src/context/AuthProvider";
 import Link from "next/link";
 import React from "react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa";
 
 interface SocialIconProps {
   href: string;
@@ -12,18 +19,18 @@ interface SocialIconProps {
 // Reusable SocialIcon component
 const SocialIcon: React.FC<SocialIconProps> = ({ href, icon, color }) => (
   <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 rounded-full transition-all duration-300 transform hover:scale-110 hover:opacity-90"
-      style={{
-        background: "linear-gradient(to right, #06b6d4, #3b82f6)", // cyan to blue gradient
-        color: "white",
-        boxShadow: `0 0 10px ${color}33`,
-      }}
-    >
-      <div className="text-xl">{icon}</div>
-    </Link>
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="p-3 rounded-full transition-all duration-300 transform hover:scale-110 hover:opacity-90"
+    style={{
+      background: "linear-gradient(to right, #06b6d4, #3b82f6)", // cyan to blue gradient
+      color: "white",
+      boxShadow: `0 0 10px ${color}33`,
+    }}
+  >
+    <div className="text-xl">{icon}</div>
+  </Link>
 );
 
 const Banner: React.FC = () => {
@@ -42,16 +49,32 @@ const Banner: React.FC = () => {
         </h1>
 
         <p className="text-gray-200 text-base sm:text-lg md:text-xl max-w-xl md:max-w-2xl animate-fade-in">
-          Empowering connectivity with high-speed, reliable internet and cable services — 
-          bringing the world closer to your home.
+          Empowering connectivity with high-speed, reliable internet and cable
+          services — bringing the world closer to your home.
         </p>
 
         {/* Social Icons */}
         <div className="flex gap-5 mt-8 animate-float ">
-          <SocialIcon href="https://facebook.com" icon={<FaFacebookF />} color="#1877F2"  />
-          <SocialIcon href="https://instagram.com" icon={<FaInstagram />} color="#E1306C" />
-          <SocialIcon href="https://linkedin.com" icon={<FaLinkedinIn />} color="#0077B5" />
-          <SocialIcon href="https://youtube.com" icon={<FaYoutube />} color="#FF0000" />
+          <SocialIcon
+            href="https://facebook.com"
+            icon={<FaFacebookF />}
+            color="#1877F2"
+          />
+          <SocialIcon
+            href="https://instagram.com"
+            icon={<FaInstagram />}
+            color="#E1306C"
+          />
+          <SocialIcon
+            href="https://linkedin.com"
+            icon={<FaLinkedinIn />}
+            color="#0077B5"
+          />
+          <SocialIcon
+            href="https://youtube.com"
+            icon={<FaYoutube />}
+            color="#FF0000"
+          />
         </div>
       </div>
 
@@ -59,7 +82,8 @@ const Banner: React.FC = () => {
       <style jsx>{`
         /* Gradient Background Animation */
         @keyframes gradient-xy {
-          0%, 100% {
+          0%,
+          100% {
             background-position: 0% 0%;
           }
           50% {
@@ -102,7 +126,8 @@ const Banner: React.FC = () => {
 
         /* Floating Social Icons */
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {

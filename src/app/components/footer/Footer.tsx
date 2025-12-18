@@ -17,9 +17,9 @@ const Footer: React.FC = () => {
   return (
     <footer
       className="bg-cover bg-center bg-black/90 text-white py-16 px-6 md:px-16"
-      style={{ backgroundImage: "url('/footer-bg.jpg')" }} // replace with your image
+      // style={{ backgroundImage: "url('/footer-bg.jpg')" }} // replace with your image
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:px-8">
         {/* Logo and Social Icons */}
         <div className="flex flex-col items-start">
           <Image
@@ -92,10 +92,31 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="border-t border-white/20 mt-12 pt-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Duranta. All rights reserved.
-      </div>
+     {/* Footer Bottom */}
+<div className="border-t border-white/20 mt-12 pt-6 text-center text-sm text-gray-400">
+  © {new Date().getFullYear()} Duranta. All rights reserved.
+  <span className="block mt-2 text-gray-500">
+    Website developed by{" "}
+    <a
+      href="https://m-hasan.vercel.app"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-cyan-400 hover:underline"
+    >
+      Mehedi Hasan
+    </a>{" "}
+    &{" "}
+    <a
+      href="https://hossahin.netlify.app"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-cyan-400 hover:underline"
+    >
+      Md Hossahin
+    </a>
+  </span>
+</div>
+
     </footer>
   );
 };

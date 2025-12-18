@@ -119,7 +119,7 @@ const SupportPage: React.FC = () => {
         </div>
 
         {/* Support Form */}
-        <form
+        {/* <form
           onSubmit={handleSubmit}
           className="max-w-3xl mx-auto mb-20 bg-gradient-to-b from-[#001B3D]/80 to-[#012E59]/60 p-8 rounded-2xl shadow-lg border border-blue-900"
         >
@@ -177,7 +177,82 @@ const SupportPage: React.FC = () => {
           >
             Submit Ticket
           </button>
-        </form>
+        </form> */}
+        <form
+  onSubmit={handleSubmit}
+  className="max-w-3xl mx-auto mb-20
+    bg-gradient-to-br from-blue-900/70 via-slate-800/60 to-blue-950/70
+    backdrop-blur-xl p-8 rounded-2xl shadow-2xl
+    border border-blue-400/20"
+>
+  <h2 className="text-2xl font-bold mb-6 text-center text-cyan-300">
+    Create Support Ticket
+  </h2>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <input
+      type="text"
+      name="name"
+      required
+      placeholder="Your Name"
+      value={form.name}
+      onChange={handleChange}
+      className="w-full bg-transparent border border-blue-400/40
+        text-white placeholder-gray-300
+        px-4 py-3 rounded-lg outline-none
+        focus:ring-2 focus:ring-cyan-400 transition"
+    />
+
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="Your Email"
+      value={form.email}
+      onChange={handleChange}
+      className="w-full bg-transparent border border-blue-400/40
+        text-white placeholder-gray-300
+        px-4 py-3 rounded-lg outline-none
+        focus:ring-2 focus:ring-cyan-400 transition"
+    />
+  </div>
+
+  <select
+    name="type"
+    value={form.type}
+    onChange={handleChange}
+    className="w-full bg-transparent border border-blue-400/40
+      text-white px-4 py-3 rounded-lg outline-none mb-6
+      focus:ring-2 focus:ring-cyan-400 transition"
+  >
+    <option className="bg-slate-900">Technical Issue</option>
+    <option className="bg-slate-900">Billing</option>
+    <option className="bg-slate-900">Account</option>
+    <option className="bg-slate-900">Feedback</option>
+  </select>
+
+  <textarea
+    name="message"
+    required
+    rows={4}
+    placeholder="Describe your issue..."
+    value={form.message}
+    onChange={handleChange}
+    className="w-full bg-transparent border border-blue-400/40
+      text-white placeholder-gray-300
+      px-4 py-3 rounded-lg outline-none mb-6
+      focus:ring-2 focus:ring-cyan-400 transition resize-none"
+  />
+
+  <button
+    type="submit"
+    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600
+      hover:opacity-90 transition py-3 rounded-lg font-semibold text-white"
+  >
+    Submit Ticket
+  </button>
+</form>
+
 
         {/* Tickets Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

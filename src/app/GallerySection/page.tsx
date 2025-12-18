@@ -4,11 +4,11 @@ import Image from "next/image";
 
 const GallerySection: React.FC = () => {
   const allImages: string[] = [
-    "/gallery/g1.jpeg",
-    "/gallery/g2.jpg",
+    "/gallery/g18.jpg",
+    "/gallery/g15.jpg",
     "/gallery/g3.jpg",
-    "/gallery/g4.jpg",
-    "/gallery/g6.png",
+    "/gallery/g13.jpg",
+    "/gallery/g12.jpg",
     "/gallery/g7.jpg",
     "/gallery/g8.jpg",
     "/gallery/g9.jpeg",
@@ -28,6 +28,9 @@ const GallerySection: React.FC = () => {
         <h2 className="text-4xl md:text-5xl font-bold mb-6 relative inline-block text-white">
           Our Awesome Gallery
         </h2>
+         <p className="text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+          Explore moments that reflect our work culture, team collaboration, and commitment to delivering reliable IT and internet solutions. Our gallery highlights the people, projects, and environments that define Duranta Online Ltd. and our dedication to quality and customer satisfaction.
+        </p>
       </div>
 
       {/* Masonry Layout */}
