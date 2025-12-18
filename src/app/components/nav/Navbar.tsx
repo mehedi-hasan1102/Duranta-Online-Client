@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,21 +9,16 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useAuth } from "@/src/context/AuthProvider";
 
 const Navbar: React.FC = () => {
-  const [email, setEmail] = useState<string | null>(null);
-  const [showLogout, setShowLogout] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [showMobileProfile, setShowMobileProfile] = useState(false);
   const pathname = usePathname();
 
   const { user, loading, signOutUser } = useAuth();
-  console.log("user", user);
-
-  useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail");
-    setEmail(userEmail);
-  }, []);
 
   const handleLogout = async () => {
     signOutUser();
+    setShowMobileProfile(false);
+    setMobileMenu(false);
   };
 
   const linkClass = (path: string) =>
@@ -62,28 +58,28 @@ const Navbar: React.FC = () => {
             </li>
           ))}
 
-          {email ? (
-            <>
-              <li>
-                <Link href="/dashboard" className={linkClass("/dashboard")}>
-                  DASHBOARD
-                </Link>
-              </li>
-
-              <li className="relative text-cyan-400 font-medium cursor-pointer">
-                <span onClick={() => setShowLogout(!showLogout)}>{email}</span>
-                {showLogout && (
-                  <div className="absolute top-full left-0 mt-1 bg-[#1f2937] text-white text-xs px-3 py-2 rounded shadow-md w-max">
-                    <button
-                      onClick={handleLogout}
-                      className="hover:bg-red-600 bg-red-500 px-3 py-1 rounded transition"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </li>
-            </>
+          {user ? (
+            // Desktop hover dropdown
+            <li className="relative cursor-pointer group">
+              <Image
+                src="/profile.png"
+                alt="Profile"
+                width={36}
+                height={36}
+                className="rounded-full border-2 border-cyan-400"
+              />
+              <div className="absolute right-0 mt-3 w-48 bg-[#1f2937] border border-gray-700 rounded-lg shadow-lg text-white text-sm overflow-hidden opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 ease-out z-50">
+                <div className="px-4 py-3 border-b border-gray-600">
+                  <p className="font-medium truncate">{user.name || user.email || "User"}</p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 hover:bg-red-600 bg-red-500 transition-colors duration-200"
+                >
+                  Logout
+                </button>
+              </div>
+            </li>
           ) : (
             <li>
               <Link href="/login" className={linkClass("/login")}>
@@ -118,35 +114,35 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
 
-          {email ? (
-            <>
-              <Link
-                href="/dashboard"
-                className="block hover:text-white transition"
-                onClick={() => setMobileMenu(false)}
+          {user ? (
+            <div className="block">
+              {/* Mobile click dropdown */}
+              <div
+                className="flex items-center gap-2 cursor-pointer select-none max-w-2xs"
+                onClick={() => setShowMobileProfile(!showMobileProfile)}
               >
-                DASHBOARD
-              </Link>
-
-              <div className="block">
-                <span
-                  onClick={() => setShowLogout(!showLogout)}
-                  className="cursor-pointer text-cyan-400"
-                >
-                  {email}
-                </span>
-                {showLogout && (
-                  <div className="mt-2 bg-[#1f2937] text-white text-xs px-3 py-2 rounded shadow-md w-max">
-                    <button
-                      onClick={handleLogout}
-                      className="hover:bg-red-600 bg-red-500 px-3 py-1 rounded transition"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
+                <Image
+                  src="/profile.png"
+                  alt="Profile"
+                  width={36}
+                  height={36}
+                  className="rounded-full border-2 border-cyan-400"
+                />
+                <span className="text-cyan-400 font-semibold">Profile</span>
               </div>
-            </>
+
+              {showMobileProfile && (
+                <div className="mt-2 bg-[#1f2937] text-white text-sm px-3 py-2 rounded shadow-md w-full transition-all duration-200">
+                  <p className="mb-2 font-medium truncate">{user.name || user.email || "User"}</p>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 hover:bg-red-600 bg-red-500 rounded transition-colors duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link
               href="/login"
