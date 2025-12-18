@@ -34,6 +34,9 @@ const Navbar: React.FC = () => {
     { href: "/contact", label: "CONTACTS" },
   ];
 
+
+if ( loading) return <span>Please wait...</span>
+
   return (
     <nav className="bg-[#101828]/90 shadow-md py-3 fixed z-50 w-full">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
