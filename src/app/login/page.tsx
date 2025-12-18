@@ -1,4 +1,5 @@
 "use client";
+import { loginUser } from "@/src/services/authService";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface LoginForm {
@@ -7,37 +8,39 @@ interface LoginForm {
 }
 
 const LoginPage: React.FC = () => {
-  const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
+const [form, setForm] = useState<LoginForm>({
+    email: "",
+    password: "",
+  });
+
   const [msg, setMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(
-        "https://duranta-online-server.vercel.app/api/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include", // for cookies
-          body: JSON.stringify(form),
-        }
-      );
+ 
 
-      const data = await res.json();
-      setMsg(data.message);
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setMsg("");
+  setLoading(true);
 
-      if (res.ok) {
-        localStorage.setItem("userEmail", data.email);
-        window.dispatchEvent(new Event("userLogin"));
-      }
-    } catch (error) {
-      setMsg("Something went wrong. Please try again.");
+  try {
+    const res = await loginUser(form); 
+    if (res.data.success) {            
+      setMsg("Login successful");
+      console.log(res.data.user);     
     }
-  };
+  } catch (err: any) {
+    setMsg(err?.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

@@ -1,18 +1,20 @@
+"use client";
 
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Navbar from "./components/nav/Navbar";
+import Footer from "./components/footer/Footer";
+import { usePathname } from "next/navigation";
+import ScrollToTopButton from "./components/scrollbtn/page";
+import WhatsAppButton from "./components/whatsup/page";
+import { ReactNode } from "react";
+import AuthProvider from "../context/AuthProvider";
 
-'use client';
-
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
-import Navbar from './components/nav/Navbar';
-import Footer from './components/footer/Footer';
-import { usePathname } from 'next/navigation';
-import ScrollToTopButton from './components/scrollbtn/page';
-import WhatsAppButton from './components/whatsup/page';
-import { ReactNode } from 'react';
-
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -20,7 +22,7 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith('/dashboard');
+  const isDashboard = pathname.startsWith("/dashboard");
 
   return (
     <html lang="en">
@@ -31,7 +33,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           name="description"
           content="Duranta Online Ltd. provides reliable internet services and IT solutions with a focus on performance, security, and customer satisfaction."
         />
-        <meta name="keywords" content="Duranta, ISP Bangladesh, Internet Service Provider, IT Solutions, Broadband" />
+        <meta
+          name="keywords"
+          content="Duranta, ISP Bangladesh, Internet Service Provider, IT Solutions, Broadband"
+        />
         <meta name="author" content="Mehedi Hasan, Md Hossahin" />
 
         {/* Open Graph */}
@@ -56,17 +61,23 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </head>
 
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {!isDashboard && <Navbar />}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <AuthProvider>
+          {!isDashboard && <Navbar />}
 
-        <main className={isDashboard ? 'relative z-10' : 'pt-22 relative z-10'}>
-          {children}
-        </main>
+          <main
+            className={isDashboard ? "relative z-10" : "pt-22 relative z-10"}
+          >
+            {children}
+          </main>
 
-        {!isDashboard && <Footer />}
+          {!isDashboard && <Footer />}
 
-        <ScrollToTopButton />
-        <WhatsAppButton />
+          <ScrollToTopButton />
+          <WhatsAppButton />
+        </AuthProvider>
       </body>
     </html>
   );

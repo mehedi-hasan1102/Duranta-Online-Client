@@ -1,11 +1,11 @@
-
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { useAuth } from "@/src/context/AuthProvider";
 
 const Navbar: React.FC = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -13,20 +13,16 @@ const Navbar: React.FC = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const pathname = usePathname();
 
+  const { user, loading, signOutUser } = useAuth();
+  console.log("user", user);
+
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
     setEmail(userEmail);
   }, []);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:8000/api/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    localStorage.removeItem("userEmail");
-    setEmail(null);
-    setShowLogout(false);
-    setMobileMenu(false);
+    signOutUser();
   };
 
   const linkClass = (path: string) =>
