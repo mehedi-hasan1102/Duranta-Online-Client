@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -14,6 +13,7 @@ import Link from "next/link";
 
 interface Ticket {
   id: number;
+  _id?: string;
   name: string;
   email: string;
   type: string;
@@ -23,9 +23,10 @@ interface Ticket {
 
 const AdminDashboard: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [activeView, setActiveView] =
-    useState<"stats" | "tickets">("stats");
+  const [activeView, setActiveView] = useState<"stats" | "tickets">("stats");
   const [openActionId, setOpenActionId] = useState<number | null>(null);
+
+  console.log("tickets",tickets);
 
   /* Fetch tickets */
   useEffect(() => {
@@ -53,15 +54,14 @@ const AdminDashboard: React.FC = () => {
     newStatus: "Open" | "Resolved" | "Closed"
   ) => {
     try {
-      await axios.put(
-        `https://duranta-online-server.vercel.app/supporttickets/${ticket.id}`,
-        { ...ticket, status: newStatus }
-      );
+     await axios.put(`http://duranta-online-server.vercel.app/supporttickets/${ticket._id}`, {
+        status: newStatus,
+      });
 
-      setTickets(prev =>
-        prev.map(t =>
-          t.id === ticket.id ? { ...t, status: newStatus } : t
-        )
+      
+
+      setTickets((prev) =>
+        prev.map((t) => (t.id === ticket.id ? { ...t, status: newStatus } : t))
       );
 
       Swal.fire({
@@ -82,9 +82,9 @@ const AdminDashboard: React.FC = () => {
 
   const stats = {
     total: tickets.length,
-    open: tickets.filter(t => t.status === "Open").length,
-    resolved: tickets.filter(t => t.status === "Resolved").length,
-    closed: tickets.filter(t => t.status === "Closed").length,
+    open: tickets.filter((t) => t.status === "Open").length,
+    resolved: tickets.filter((t) => t.status === "Resolved").length,
+    closed: tickets.filter((t) => t.status === "Closed").length,
   };
 
   return (
@@ -96,9 +96,7 @@ const AdminDashboard: React.FC = () => {
         </h2>
 
         <nav className="flex flex-col gap-4">
-          <button onClick={() => setActiveView("stats")}>
-            Dashboard
-          </button>
+          <button onClick={() => setActiveView("stats")}>Dashboard</button>
           <button onClick={() => setActiveView("tickets")}>
             Support Tickets
           </button>
@@ -111,15 +109,29 @@ const AdminDashboard: React.FC = () => {
         {/* STATS VIEW */}
         {activeView === "stats" && (
           <>
-            <h1 className="text-2xl mb-6">
-              Welcome to Admin Dashboard
-            </h1>
+            <h1 className="text-2xl mb-6">Welcome to Admin Dashboard</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <StatCard title="Total Tickets" value={stats.total} icon={<FiUsers />} />
-              <StatCard title="Open" value={stats.open} icon={<FiHelpCircle />} />
-              <StatCard title="Resolved" value={stats.resolved} icon={<FiCheckCircle />} />
-              <StatCard title="Closed" value={stats.closed} icon={<FiXCircle />} />
+              <StatCard
+                title="Total Tickets"
+                value={stats.total}
+                icon={<FiUsers />}
+              />
+              <StatCard
+                title="Open"
+                value={stats.open}
+                icon={<FiHelpCircle />}
+              />
+              <StatCard
+                title="Resolved"
+                value={stats.resolved}
+                icon={<FiCheckCircle />}
+              />
+              <StatCard
+                title="Closed"
+                value={stats.closed}
+                icon={<FiXCircle />}
+              />
             </div>
           </>
         )}
@@ -127,7 +139,7 @@ const AdminDashboard: React.FC = () => {
         {/* TICKETS VIEW */}
         {activeView === "tickets" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tickets.map(ticket => (
+            {tickets.map((ticket) => (
               <div
                 key={ticket.id}
                 className="bg-black/20 backdrop-blur-md p-6 rounded-2xl border border-white/20"
@@ -142,9 +154,7 @@ const AdminDashboard: React.FC = () => {
                     <button
                       onClick={() =>
                         setOpenActionId(
-                          openActionId === ticket.id
-                            ? null
-                            : ticket.id
+                          openActionId === ticket.id ? null : ticket.id
                         )
                       }
                       className="text-xs px-3 py-1 rounded bg-white/10"
@@ -154,14 +164,11 @@ const AdminDashboard: React.FC = () => {
 
                     {openActionId === ticket.id && (
                       <div className="absolute right-0 mt-2 w-32 bg-black/90 border border-white/20 rounded-xl z-10">
-                        {["Open", "Resolved", "Closed"].map(status => (
+                        {["Open", "Resolved", "Closed"].map((status) => (
                           <button
                             key={status}
                             onClick={() => {
-                              handleStatusChange(
-                                ticket,
-                                status as any
-                              );
+                              handleStatusChange(ticket, status as any);
                               setOpenActionId(null);
                             }}
                             className="block w-full px-4 py-2 text-left hover:bg-white/10"
