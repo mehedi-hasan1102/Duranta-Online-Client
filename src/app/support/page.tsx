@@ -22,29 +22,6 @@ const SupportPage: React.FC = () => {
     message: "",
   });
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const res = await axios.get(
-          "https://duranta-online-server.vercel.app/supporttickets"
-        );
-        setTickets(res?.data);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to Load Tickets",
-          text: "Unable to fetch support tickets at this time. Please try again later.",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-      }
-    };
-
-    fetchTickets();
-  }, []);
-
-  console.log("tickets", tickets);
-
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -70,8 +47,6 @@ const SupportPage: React.FC = () => {
         "https://duranta-online-server.vercel.app/supporttickets",
         newTicket
       );
-
-      console.log("response", response);
 
       if (response?.data?.success === true) {
         Swal.fire({
@@ -99,10 +74,21 @@ const SupportPage: React.FC = () => {
         timer: 2500,
       });
     }
-
-    setTickets([newTicket, ...tickets]);
     setForm({ name: "", email: "", type: "Technical Issue", message: "" });
   };
+
+  useEffect(() => {
+    axios
+      .get("https://duranta-online-server.vercel.app/supporttickets")
+      .then((res) => {
+        setTickets(res?.data || []);
+      })
+      .catch((error) => {
+        return [];
+      });
+  }, []);
+
+
 
   return (
     <section className="py-20 min-h-screen text-white">
@@ -179,111 +165,116 @@ const SupportPage: React.FC = () => {
           </button>
         </form> */}
         <form
-  onSubmit={handleSubmit}
-  className="max-w-3xl mx-auto mb-20
+          onSubmit={handleSubmit}
+          className="max-w-3xl mx-auto mb-20
     bg-gradient-to-br from-blue-900/70 via-slate-800/60 to-blue-950/70
     backdrop-blur-xl p-8 rounded-2xl shadow-2xl
     border border-blue-400/20"
->
-  <h2 className="text-2xl font-bold mb-6 text-center text-cyan-300">
-    Create Support Ticket
-  </h2>
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-cyan-300">
+            Create Support Ticket
+          </h2>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <input
-      type="text"
-      name="name"
-      required
-      placeholder="Your Name"
-      value={form.name}
-      onChange={handleChange}
-      className="w-full bg-transparent border border-blue-400/40
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="Your Name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full bg-transparent border border-blue-400/40
         text-white placeholder-gray-300
         px-4 py-3 rounded-lg outline-none
         focus:ring-2 focus:ring-cyan-400 transition"
-    />
+            />
 
-    <input
-      type="email"
-      name="email"
-      required
-      placeholder="Your Email"
-      value={form.email}
-      onChange={handleChange}
-      className="w-full bg-transparent border border-blue-400/40
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Your Email"
+              value={form.email}
+              onChange={handleChange}
+              className="w-full bg-transparent border border-blue-400/40
         text-white placeholder-gray-300
         px-4 py-3 rounded-lg outline-none
         focus:ring-2 focus:ring-cyan-400 transition"
-    />
-  </div>
+            />
+          </div>
 
-  <select
-    name="type"
-    value={form.type}
-    onChange={handleChange}
-    className="w-full bg-transparent border border-blue-400/40
+          <select
+            name="type"
+            value={form.type}
+            onChange={handleChange}
+            className="w-full bg-transparent border border-blue-400/40
       text-white px-4 py-3 rounded-lg outline-none mb-6
       focus:ring-2 focus:ring-cyan-400 transition"
-  >
-    <option className="bg-slate-900">Technical Issue</option>
-    <option className="bg-slate-900">Billing</option>
-    <option className="bg-slate-900">Account</option>
-    <option className="bg-slate-900">Feedback</option>
-  </select>
+          >
+            <option className="bg-slate-900">Technical Issue</option>
+            <option className="bg-slate-900">Billing</option>
+            <option className="bg-slate-900">Account</option>
+            <option className="bg-slate-900">Feedback</option>
+          </select>
 
-  <textarea
-    name="message"
-    required
-    rows={4}
-    placeholder="Describe your issue..."
-    value={form.message}
-    onChange={handleChange}
-    className="w-full bg-transparent border border-blue-400/40
+          <textarea
+            name="message"
+            required
+            rows={4}
+            placeholder="Describe your issue..."
+            value={form.message}
+            onChange={handleChange}
+            className="w-full bg-transparent border border-blue-400/40
       text-white placeholder-gray-300
       px-4 py-3 rounded-lg outline-none mb-6
       focus:ring-2 focus:ring-cyan-400 transition resize-none"
-  />
+          />
 
-  <button
-    type="submit"
-    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600
       hover:opacity-90 transition py-3 rounded-lg font-semibold text-white"
-  >
-    Submit Ticket
-  </button>
-</form>
-
+          >
+            Submit Ticket
+          </button>
+        </form>
 
         {/* Tickets Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tickets.map((ticket) => (
-            <div
-              key={ticket.id}
-              className="bg-gradient-to-b from-[#001B3D]/80 to-[#012E59]/60 p-6 rounded-2xl shadow-lg border border-blue-900 hover:scale-105 transition-transform"
-            >
-              <h3 className="font-bold text-lg mb-1">
-                {ticket.name.toUpperCase()}
-              </h3>
-              <p className="text-gray-400 text-sm mb-2 break-words">
-                {ticket.email}
-              </p>
-              <span className="bg-cyan-700 inline-block px-3 py-1 text-xs rounded mb-3">
-                {ticket.type}
-              </span>
-              <p className="text-gray-300 mb-4 break-words">{ticket.message}</p>
-              <span
-                className={`inline-block px-3 py-1 rounded text-xs font-semibold ${
-                  ticket.status === "Open"
-                    ? "bg-green-500"
-                    : ticket.status === "Resolved"
-                    ? "bg-yellow-500"
-                    : "bg-gray-500"
-                }`}
+          {tickets ? (
+            tickets.map((ticket) => (
+              <div
+                key={ticket.id}
+                className="bg-gradient-to-b from-[#001B3D]/80 to-[#012E59]/60 p-6 rounded-2xl shadow-lg border border-blue-900 hover:scale-105 transition-transform"
               >
-                {ticket.status}
-              </span>
-            </div>
-          ))}
+                <h3 className="font-bold text-lg mb-1">
+                  {ticket.name.toUpperCase()}
+                </h3>
+                <p className="text-gray-400 text-sm mb-2 break-words">
+                  {ticket.email}
+                </p>
+                <span className="bg-cyan-700 inline-block px-3 py-1 text-xs rounded mb-3">
+                  {ticket.type}
+                </span>
+                <p className="text-gray-300 mb-4 break-words">
+                  {ticket.message}
+                </p>
+                <span
+                  className={`inline-block px-3 py-1 rounded text-xs font-semibold ${
+                    ticket.status === "Open"
+                      ? "bg-green-500"
+                      : ticket.status === "Resolved"
+                      ? "bg-yellow-500"
+                      : "bg-gray-500"
+                  }`}
+                >
+                  {ticket.status}
+                </span>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No tickets found.</p>
+          )}
         </div>
       </div>
     </section>
