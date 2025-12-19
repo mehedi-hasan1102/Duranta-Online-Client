@@ -26,7 +26,7 @@ const AdminDashboard: React.FC = () => {
   const [activeView, setActiveView] = useState<"stats" | "tickets">("stats");
   const [openActionId, setOpenActionId] = useState<number | null>(null);
 
-  console.log("tickets",tickets);
+  console.log("tickets", tickets);
 
   /* Fetch tickets */
   useEffect(() => {
@@ -54,11 +54,12 @@ const AdminDashboard: React.FC = () => {
     newStatus: "Open" | "Resolved" | "Closed"
   ) => {
     try {
-     await axios.put(`http://duranta-online-server.vercel.app/supporttickets/${ticket._id}`, {
-        status: newStatus,
-      });
-
-      
+      await axios.put(
+        `https://duranta-online-server.vercel.app/supporttickets/${ticket._id}`,
+        {
+          status: newStatus,
+        }
+      );
 
       setTickets((prev) =>
         prev.map((t) => (t.id === ticket.id ? { ...t, status: newStatus } : t))
