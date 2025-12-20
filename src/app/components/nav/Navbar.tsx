@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -34,8 +33,7 @@ const Navbar: React.FC = () => {
     { href: "/contact", label: "CONTACTS" },
   ];
 
-
-if ( loading) return <span>Please wait...</span>
+  if (loading) return <span>Please wait...</span>;
 
   return (
     <nav className="bg-[#101828]/90 shadow-md py-3 fixed z-50 w-full">
@@ -73,8 +71,17 @@ if ( loading) return <span>Please wait...</span>
               />
               <div className="absolute right-0 mt-3 w-48 bg-[#1f2937] border border-gray-700 rounded-lg shadow-lg text-white text-sm overflow-hidden opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 ease-out z-50">
                 <div className="px-4 py-3 border-b border-gray-600">
-                  <p className="font-medium truncate">{user.name || user.email || "User"}</p>
+                  <p className="font-medium truncate">
+                    {user.name || user.email || "User"}
+                  </p>
                 </div>
+
+                <div className="px-4 py-3 border-b border-gray-600">
+                  <Link href="/dashboard" className="font-medium truncate">
+                    Dashboard
+                  </Link>
+                </div>
+
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-2 hover:bg-red-600 bg-red-500 transition-colors duration-200"
@@ -136,7 +143,9 @@ if ( loading) return <span>Please wait...</span>
 
               {showMobileProfile && (
                 <div className="mt-2 bg-[#1f2937] text-white text-sm px-3 py-2 rounded shadow-md w-full transition-all duration-200">
-                  <p className="mb-2 font-medium truncate">{user.name || user.email || "User"}</p>
+                  <p className="mb-2 font-medium truncate">
+                    {user.name || user.email || "User"}
+                  </p>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 hover:bg-red-600 bg-red-500 rounded transition-colors duration-200"
