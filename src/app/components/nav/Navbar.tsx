@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useAuth } from "@/src/context/AuthProvider";
 
@@ -11,11 +11,13 @@ const Navbar: React.FC = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMobileProfile, setShowMobileProfile] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const { user, loading, signOutUser } = useAuth();
-console.log(user)
+  console.log(user);
   const handleLogout = async () => {
     signOutUser();
+    router.push("/login");
     setShowMobileProfile(false);
     setMobileMenu(false);
   };
@@ -76,11 +78,13 @@ console.log(user)
                   </p>
                 </div>
 
-                <div className="px-4 py-3 border-b border-gray-600">
-                  <Link href="/dashboard" className="font-medium truncate">
-                    Dashboard
-                  </Link>
-                </div>
+                {user.role === "admin" && (
+                  <div className="px-4 py-3 border-b border-gray-600">
+                    <Link href="/dashboard" className="font-medium truncate">
+                      Dashboard
+                    </Link>
+                  </div>
+                )}
 
                 <button
                   onClick={handleLogout}
