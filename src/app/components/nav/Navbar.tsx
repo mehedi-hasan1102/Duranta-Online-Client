@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
 
   const { user, loading, signOutUser } = useAuth();
-
+console.log(user)
   const handleLogout = async () => {
     signOutUser();
     setShowMobileProfile(false);
