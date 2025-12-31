@@ -64,3 +64,14 @@ cd Duranta-Online-Client
 
 # Install dependencies
 pnpm install
+```
+### For check admin Dashboard 
+```
+Email    : admin@duranta.com
+Password : 12345
+```
+### For check user Dashboard 
+```
+Email    : user@duranta.com
+Password : 12345
+```
