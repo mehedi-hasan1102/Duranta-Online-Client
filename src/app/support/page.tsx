@@ -248,7 +248,7 @@ const SupportPage: React.FC = () => {
                 className="bg-gradient-to-b from-[#001B3D]/80 to-[#012E59]/60 p-6 rounded-2xl shadow-lg border border-blue-900 hover:scale-105 transition-transform"
               >
                 <h3 className="font-bold text-lg mb-1">
-                  {ticket.name.toUpperCase()}
+                  {ticket.name}
                 </h3>
                 <p className="text-gray-400 text-sm mb-2 break-words">
                   {ticket.email}
